@@ -8,5 +8,10 @@
  */
 class Router
 {
+    public
+    public function ParseURL()
+    {
+
+    }
 
 }
