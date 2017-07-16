@@ -8,10 +8,25 @@
  */
 class Router
 {
-    public
-    public function ParseURL()
+    public $urlParts;
+    public function __construct()
     {
+     $url= $_SERVER['REQUEST_URI'];
+     $this->urlParts=explode('/',$url);
+     $this->run();
 
     }
 
+    public function run()
+    {
+        if($this->urlParts[1] == ''){
+           $controller = new Controller_main();
+           $controller->start();
+
+        }
+
+        
+    }
+
 }
+

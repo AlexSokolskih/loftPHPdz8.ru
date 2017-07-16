@@ -6,4 +6,4 @@
  * Time: 14:54
  */
 
-require_once 'vendor/autoload.php';
+require_once 'app/run.php';

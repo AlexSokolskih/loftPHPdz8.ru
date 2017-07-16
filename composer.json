@@ -1,6 +1,7 @@
 {
   "require": {
     "php": ">=5.6.0",
-    "illuminate/database": "5.4.27"
+    "illuminate/database": "5.4.27",
+    "twig/twig": "2.x-dev"
   }
 }
