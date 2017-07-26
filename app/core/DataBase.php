@@ -19,7 +19,6 @@ class DataBase
         $charset = 'utf8';
         $dbdriver = 'mysql';
 
-
         $capsule = new Capsule;
         $capsule->addConnection([
             'driver' => $dbdriver,
@@ -36,23 +35,27 @@ class DataBase
     $capsule->bootEloquent();
     }
 
-    public function getOrderList()
-    {
-       //$orderList= Order::all()->toArray();
-        $orderList= Order::find(1)->category();
-        return $orderList;
-    }
+public function getOrderList()
+{
+    //$orderList= Order::all()->toArray();
+    $orderList= Order::find(1)->get()->category()->toArray();
+    return $orderList;
+}
 
 }
+
+
+class Category extends \Illuminate\Database\Eloquent\Model{
+    protected $table = 'Categorys';
+}
+
 
 class Order extends \Illuminate\Database\Eloquent\Model{
     public function category()
     {
-        return $this->hasOne('Category','category', 'id');
+        return $this->belongsTo('Category', 'category_id');
     }
 }
 
-class Category extends \Illuminate\Database\Eloquent\Model{
-}
 
 
