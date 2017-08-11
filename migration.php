@@ -7,7 +7,9 @@
  * Time: 0:57
  */
 require_once 'vendor/autoload.php';
+
 use Illuminate\Database\Capsule\Manager as Capsule;
+
 $host = '127.0.0.1';
 $db = 'loftschool';
 $user = 'root';

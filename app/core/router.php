@@ -48,7 +48,7 @@ class Router
                             $orderId = intval($this->urlParts[4]);
                             $orderName = $_GET["name"];
                             $category_id = $_GET["category_id"];
-                            $jsonOrder=$controllerOrders->updateOrder($orderId, $orderName, $category_id);
+                            $jsonOrder = $controllerOrders->updateOrder($orderId, $orderName, $category_id);
                             echo $jsonOrder;
                         }
                     } elseif ($_SERVER["REQUEST_METHOD"] == 'DELETE') {

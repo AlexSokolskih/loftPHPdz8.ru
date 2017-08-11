@@ -70,6 +70,7 @@ class DataBase
         $order->save();
         return $order->toArray();
     }
+
     public function deleteOrder($order_id)
     {
         Order::destroy($order_id);

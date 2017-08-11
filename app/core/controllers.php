@@ -15,7 +15,7 @@ class Controller_main
         $twig = new Twig_Environment($loader);
         $database = new DataBase();
         $orders = $database->getOrderList();
-       echo $twig->render('index.twig',array('orders'=>$orders));
+        echo $twig->render('index.twig', array('orders' => $orders));
 
 
     }

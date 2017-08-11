@@ -8,7 +8,6 @@ require_once 'core/DataBase.php';
 require_once 'controllers/controllerOrders.php';
 
 
-
-$router=new Router();
+$router = new Router();
 
 ?>

@@ -1,20 +1,20 @@
-{% set themePath = '/themes/Bell/'  %}
+{% set themePath = '/themes/Bell/' %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Bell Bootstrap 4 Theme</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    
+
     <!-- Facebook Opengraph integration: https://developers.facebook.com/docs/sharing/opengraph -->
     <meta property="og:title" content="">
     <meta property="og:image" content="">
     <meta property="og:url" content="">
     <meta property="og:site_name" content="">
     <meta property="og:description" content="">
-    
+
     <!-- Twitter Cards integration: https://dev.twitter.com/cards/  -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="">
@@ -24,177 +24,178 @@
 
     <!-- Favicon -->
     <link href="{{ themePath }}img/favicon.ico" rel="icon">
-  
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700|Roboto:400,900" rel="stylesheet">
-    
+
     <!-- Bootstrap CSS File -->
     <link href="{{ themePath }}lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
+
     <!-- Libraries CSS Files -->
     <link href="{{ themePath }}lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Main Stylesheet File -->
     <link href="{{ themePath }}css/style.css" rel="stylesheet">
-    
+
     <!-- =======================================================
       Theme Name: Bell
       Theme URL: https://bootstrapmade.com/bell-free-bootstrap-4-template/
       Author: BootstrapMade.com
       Author URL: https://bootstrapmade.com
     ======================================================= -->
-  </head>
+</head>
 
-  <body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-    </script>
-    <!-- Page Content
-    ================================================== -->
-    <!-- Hero -->
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+<!-- Page Content
+================================================== -->
+<!-- Hero -->
 
-    <section class="hero">
-      <div class="container text-center">
+<section class="hero">
+    <div class="container text-center">
         <row>
-          <col-md-12>
-            <table class="table table-bordered table-inverse">
-              <thead>
-              <tr>
-                <th>#</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Действия</th>
-              </tr>
-              </thead>
-              <tbody>
-              {% for order in orders %}
-                <tr>
-                  <th scope="row">{{ loop.index }}</th>
-                  <td class="orderid">{{ order.id }}</td>
-                  <td class="ordername">{{ order.name }}</td>
-                  <td class="categoryid" data-categiryid="{{ order.category.id }}">{{ order.category.name }}</td>
-                  <td class="actionOrder"><a href="api/v1/orders/{{ order.id }}" class="deleteOrder">удалить</a>/<a href="api/v1/orders/{{ order.id }}" class="editOrder">редактировать</a></td>
-                </tr>
-              {% endfor %}
+            <col-md-12>
+                <table class="table table-bordered table-inverse">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td class="orderid">{{ order.id }}</td>
+                            <td class="ordername">{{ order.name }}</td>
+                            <td class="categoryid"
+                                data-categiryid="{{ order.category.id }}">{{ order.category.name }}</td>
+                            <td class="actionOrder"><a href="api/v1/orders/{{ order.id }}"
+                                                       class="deleteOrder">удалить</a>/<a
+                                        href="api/v1/orders/{{ order.id }}" class="editOrder">редактировать</a></td>
+                        </tr>
+                    {% endfor %}
 
 
-              </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <h3>Добавить новый товар</h3>
-            <form action="api/v1/orders/{{ order.id }}" metod="post">
-              <input id="order" type="text" placeholder="товар" ><br>
-             Категория <select name="category_id" >
-                <option value="1">Стройматериалы</option>
-              </select><br>
-              <input id="submitOrder" type="submit"></form>
-          </col-md-12>
+                <h3>Добавить новый товар</h3>
+                <form action="api/v1/orders/{{ order.id }}" metod="post">
+                    <input id="order" type="text" placeholder="товар"><br>
+                    Категория <select name="category_id">
+                        <option value="1">Стройматериалы</option>
+                    </select><br>
+                    <input id="submitOrder" type="submit"></form>
+            </col-md-12>
         </row>
-      </div>
+    </div>
 
-      
-    </section>
-    <!-- /Hero -->
-    
-  <!-- Header -->
 
-  <div class="popup">
+</section>
+<!-- /Hero -->
+
+<!-- Header -->
+
+<div class="popup">
     <div class="closebutton"><a href="api/v1/orders/">закрыть окно</a></div>
     <form action="api/v1/orders/">
-      <input type="hidden" name="orderid" value="0">
-      <input type="text" name="ordername"><br>
-      <select name="category_id" id="">
-        <option value="1">Стройматериалы</option>
-      </select><br>
-      <input type="submit" value="изменить"><br>
+        <input type="hidden" name="orderid" value="0">
+        <input type="text" name="ordername"><br>
+        <select name="category_id" id="">
+            <option value="1">Стройматериалы</option>
+        </select><br>
+        <input type="submit" value="изменить"><br>
     </form>
-  </div>
+</div>
 
 
+<script>
 
-    <script>
+    $(document).ready(function () {
 
-        $(document).ready(function(){
+        $(".deleteOrder").click(function (e) {
+            e.preventDefault();
+            var tr = $(this).parent().parent();
+            orderid = tr.children('.orderid').text();
 
-            $(".deleteOrder").click(function (e) {
-                e.preventDefault();
-                var tr = $(this).parent().parent();
-                 orderid = tr.children('.orderid').text();
+            $.ajax({
+                url: 'api/v1/orders/' + orderid,
+                method: 'DELETE',
+                success: function () {
 
-                $.ajax({
-                    url: 'api/v1/orders/'+orderid,
-                    method: 'DELETE',
-                    success: function(){
+                    location.reload();
 
-                        location.reload();
-
-                    }
-                });
-            })
-
-
-            $(".editOrder").click(function (e) {
-                e.preventDefault();
-                var tr = $(this).parent().parent();
-                orderid = tr.children('.orderid').text();
-                ordername = tr.children('.ordername').text();
-                category_id = tr.children('.categoryid').attr('data-categiryid');
-
-                $(".popup").css('display','inline-block');
-
-                $('.popup input[name=orderid]').val(orderid);
-                $('.popup input[name=ordername]').val(ordername);
-                $('.popup select[name=category_id]').val(category_id);
-
-
-            })
-
-
-            $("#submitOrder").click(function (e) {
-                e.preventDefault();
-                var name = $(this).parent().children("#order").val();
-                var category_id = $(this).parent().children("select[name=category_id]").val();
-                console.log(category_id);
-
-                $.ajax({
-                    url: 'api/v1/orders',
-                    method: 'POST',
-                    data: ({ name : name, category_id: category_id}),
-                    success: function(){
-                        location.reload();
-                    }
-                });
-            })
-
-
-            $(".popup .closebutton a").click(function (e) {
-                e.preventDefault();
-                $(".popup").css('display','none');
-            })
-
-            $(".popup input[type=submit]").click(function (e) {
-                e.preventDefault();
-                var orderid = $('.popup input[name=orderid]').val();
-                var ordername = $('.popup input[name=ordername]').val();
-                var categoryid = $('.popup select[name=category_id]').val();
-
-
-                $.ajax({
-                    url: 'api/v1/orders/'+orderid+'?name='+ordername+'&category_id='+category_id,
-                    method: 'PUT',
-                    success: function(){
-                        location.reload();
-                    }
-                });
-
+                }
             });
+        })
 
+
+        $(".editOrder").click(function (e) {
+            e.preventDefault();
+            var tr = $(this).parent().parent();
+            orderid = tr.children('.orderid').text();
+            ordername = tr.children('.ordername').text();
+            category_id = tr.children('.categoryid').attr('data-categiryid');
+
+            $(".popup").css('display', 'inline-block');
+
+            $('.popup input[name=orderid]').val(orderid);
+            $('.popup input[name=ordername]').val(ordername);
+            $('.popup select[name=category_id]').val(category_id);
+
+
+        })
+
+
+        $("#submitOrder").click(function (e) {
+            e.preventDefault();
+            var name = $(this).parent().children("#order").val();
+            var category_id = $(this).parent().children("select[name=category_id]").val();
+            console.log(category_id);
+
+            $.ajax({
+                url: 'api/v1/orders',
+                method: 'POST',
+                data: ({name: name, category_id: category_id}),
+                success: function () {
+                    location.reload();
+                }
+            });
+        })
+
+
+        $(".popup .closebutton a").click(function (e) {
+            e.preventDefault();
+            $(".popup").css('display', 'none');
+        })
+
+        $(".popup input[type=submit]").click(function (e) {
+            e.preventDefault();
+            var orderid = $('.popup input[name=orderid]').val();
+            var ordername = $('.popup input[name=ordername]').val();
+            var categoryid = $('.popup select[name=category_id]').val();
+
+
+            $.ajax({
+                url: 'api/v1/orders/' + orderid + '?name=' + ordername + '&category_id=' + category_id,
+                method: 'PUT',
+                success: function () {
+                    location.reload();
+                }
+            });
 
         });
 
-    </script>
+
+    });
+
+</script>
 
 
-    
-  </body>
+</body>
 </html>
