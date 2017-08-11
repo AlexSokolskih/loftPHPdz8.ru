@@ -28,12 +28,22 @@ $capsule->addConnection([
 // Setup the Eloquent ORM…
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
-Capsule::schema()->create('orders', function ($table) {
+
+/*Capsule::schema()->create('orders', function ($table) {
     $table->increments('id');
     $table->string('name', 100);
     $table->integer('category_id');
 });
-Capsule::schema()->create('categorys', function ($table) {
+
+ Capsule::schema()->create('categorys', function ($table) {
     $table->increments('id');
     $table->string('name', 100);
+});
+
+Capsule::schema()->table('orders', function ($table) {
+    $table->timestamps();
+});
+*/
+Capsule::schema()->table('categorys', function ($table) {
+    $table->timestamps();
 });

@@ -46,6 +46,8 @@
   </head>
 
   <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    </script>
     <!-- Page Content
     ================================================== -->
     <!-- Hero -->
@@ -61,34 +63,31 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Category</th>
+                <th>Действия</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@TwBootstrap</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              {% for order in orders %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td class="orderid">{{ order.id }}</td>
+                  <td class="ordername">{{ order.name }}</td>
+                  <td class="categoryid" data-categiryid="{{ order.category.id }}">{{ order.category.name }}</td>
+                  <td class="actionOrder"><a href="api/v1/orders/{{ order.id }}" class="deleteOrder">удалить</a>/<a href="api/v1/orders/{{ order.id }}" class="editOrder">редактировать</a></td>
+                </tr>
+              {% endfor %}
+
+
               </tbody>
             </table>
+
+            <h3>Добавить новый товар</h3>
+            <form action="api/v1/orders/{{ order.id }}" metod="post">
+              <input id="order" type="text" placeholder="товар" ><br>
+             Категория <select name="category_id" >
+                <option value="1">Стройматериалы</option>
+              </select><br>
+              <input id="submitOrder" type="submit"></form>
           </col-md-12>
         </row>
       </div>
@@ -99,10 +98,101 @@
     
   <!-- Header -->
 
-  
+  <div class="popup">
+    <div class="closebutton"><a href="api/v1/orders/">закрыть окно</a></div>
+    <form action="api/v1/orders/">
+      <input type="hidden" name="orderid" value="0">
+      <input type="text" name="ordername"><br>
+      <select name="category_id" id="">
+        <option value="1">Стройматериалы</option>
+      </select><br>
+      <input type="submit" value="изменить"><br>
+    </form>
+  </div>
 
 
-    <a class="scrolltop" href="#"><span class="fa fa-angle-up"></span></a> <!-- JavaScript
+
+    <script>
+
+        $(document).ready(function(){
+
+            $(".deleteOrder").click(function (e) {
+                e.preventDefault();
+                var tr = $(this).parent().parent();
+                 orderid = tr.children('.orderid').text();
+
+                $.ajax({
+                    url: 'api/v1/orders/'+orderid,
+                    method: 'DELETE',
+                    success: function(){
+
+                        location.reload();
+
+                    }
+                });
+            })
+
+
+            $(".editOrder").click(function (e) {
+                e.preventDefault();
+                var tr = $(this).parent().parent();
+                orderid = tr.children('.orderid').text();
+                ordername = tr.children('.ordername').text();
+                category_id = tr.children('.categoryid').attr('data-categiryid');
+
+                $(".popup").css('display','inline-block');
+
+                $('.popup input[name=orderid]').val(orderid);
+                $('.popup input[name=ordername]').val(ordername);
+                $('.popup select[name=category_id]').val(category_id);
+
+
+            })
+
+
+            $("#submitOrder").click(function (e) {
+                e.preventDefault();
+                var name = $(this).parent().children("#order").val();
+                var category_id = $(this).parent().children("select[name=category_id]").val();
+                console.log(category_id);
+
+                $.ajax({
+                    url: 'api/v1/orders',
+                    method: 'POST',
+                    data: ({ name : name, category_id: category_id}),
+                    success: function(){
+                        location.reload();
+                    }
+                });
+            })
+
+
+            $(".popup .closebutton a").click(function (e) {
+                e.preventDefault();
+                $(".popup").css('display','none');
+            })
+
+            $(".popup input[type=submit]").click(function (e) {
+                e.preventDefault();
+                var orderid = $('.popup input[name=orderid]').val();
+                var ordername = $('.popup input[name=ordername]').val();
+                var categoryid = $('.popup select[name=category_id]').val();
+
+
+                $.ajax({
+                    url: 'api/v1/orders/'+orderid+'?name='+ordername+'&category_id='+category_id,
+                    method: 'PUT',
+                    success: function(){
+                        location.reload();
+                    }
+                });
+
+            });
+
+
+        });
+
+    </script>
 
 
     
